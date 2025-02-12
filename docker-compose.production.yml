@@ -1,0 +1,64 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - "kittygram_network"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "postgres"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 30s
+  restart: always
+
+  backend:
+    image: baranovr605/kittygram_backend:latest
+    container_name: backend
+    env_file: .env
+    volumes:
+      - media:/app/media
+      - static:/app/collected_static
+    networks:
+      - "kittygram_network"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+
+    frontend:
+      image: baranovr605/kittygram_frontend:latest
+      container_name: frontend
+      env_file: .env
+      volumes:
+        - static:/app/build
+      networks:
+        - "kittygram_network"
+    depends_on:
+      - backend
+    restart: always
+
+    gateway:
+      image: baranovr605/kittygram_gateway:latest
+      container_name: gateway
+      env_file: .env
+      ports: 8089:80
+      networks:
+        - "kittygram_network"
+    depends_on:
+      - frontend
+    restart: always
+
+volumes:
+  pg_data:
+  media:
+  static:
+
+networks:
+  go_app_network:
+    name: "kittygram_network"
+    driver: "bridge"
