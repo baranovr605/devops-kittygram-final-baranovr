@@ -3,11 +3,12 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
 
 STATIC_ROOT = "/app/collected_static"
 
@@ -61,14 +62,14 @@ PG_DATABASE_HOST = os.getenv("POSTGRES_HOST")
 PG_DATABASE_PORT = os.getenv("POSTGRES_PORT")
 
 DATABASES = {
-    'default': f"{
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': {PG_DATABASE_NAME},
-        'USER': {PG_DATABASE_USER},
-        'PASSWORD': {PG_DATABASE_PASSWORD},
-        'HOST': {PG_DATABASE_HOST},
-        'PORT': {PG_DATABASE_PORT}
-    }"
+        'NAME': PG_DATABASE_NAME,
+        'USER': PG_DATABASE_USER,
+        'PASSWORD': PG_DATABASE_PASSWORD,
+        'HOST': PG_DATABASE_HOST,
+        'PORT': PG_DATABASE_PORT
+    }
 }
 
 
@@ -77,16 +78,24 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation'
+            '.NumericPasswordValidator',
     },
 ]
 
@@ -102,7 +111,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -111,14 +120,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticated',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
 
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.'
+        'PageNumberPagination',
     'PAGE_SIZE': 10,
 
 }
