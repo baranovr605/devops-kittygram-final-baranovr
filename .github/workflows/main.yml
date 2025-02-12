@@ -78,7 +78,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/kittygram_frontend:latest
 
-  build_and_push_containers:
+  deploy_kittygram:
     runs-on: ubuntu-latest
     needs: build_and_push_containers
     steps:
