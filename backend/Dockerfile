@@ -1,5 +1,7 @@
 FROM python:3.9
 
+ENV SECRET_KEY key
+
 COPY ./requirements.txt ./requirements.txt
 
 RUN apt update && apt install build-essential libpq-dev python3-dev -y && \
