@@ -2,7 +2,7 @@ FROM python:3.13.2
 
 COPY ./requirements.txt ./requirements.txt
 
-RUN python -m pip install --upgrade pip && \
+RUN python -m pip install --upgrade pip setuptools wheel && \
     pip install -r requirements.txt 
     
 
