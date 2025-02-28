@@ -1,12 +1,5 @@
 FROM python:3.9
 
-ENV POSTGRES_HOST 127.0.0.1
-ENV POSTGRES_PORT 5432
-ENV POSTGRES_DB postgres
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD postgres
-ENV SECRET_KEY key
-
 COPY ./requirements.txt ./requirements.txt
 
 RUN apt update && apt install build-essential libpq-dev python3-dev -y && \
@@ -21,6 +14,7 @@ WORKDIR /app
 
 COPY . .
 
+RUN python manage.py collectstatic --noinput
 RUN python manage.py collectstatic --noinput && \
     python manage.py migrate
 
