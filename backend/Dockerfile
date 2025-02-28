@@ -12,6 +12,8 @@ EXPOSE 8000
 
 WORKDIR /app
 
+COPY . .
+
 RUN python manage.py collectstatic --noinput && \
     python manage.py migrate
 
