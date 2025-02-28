@@ -2,7 +2,7 @@ FROM python:3.13.2
 
 COPY ./requirements.txt ./requirements.txt
 
-RUN apt update && apt install python3.6-dev libmysqlclient-dev
+RUN apt update && apt install python3.6-dev libmysqlclient-dev && \
     python -m pip install --upgrade pip setuptools wheel && \
     pip install -r requirements.txt 
     
