@@ -35,9 +35,14 @@ services:
     container_name: frontend
     env_file: .env
     volumes:
-      - static:/app/build
+      - static:/app/app/frontend_static
     networks:
       - "kittygram_network"
+    depends_on:
+      - backend
+    command: >
+      sh -c "mkdir -p /app/frontend_static  &&
+             cp -r /app/build/. /app/frontend_static/"
     restart: always
   
   gateway:
@@ -52,7 +57,7 @@ services:
     networks:
       - "kittygram_network"
     depends_on:
-      - backend
+      - frontend
     restart: always
 
 volumes:
