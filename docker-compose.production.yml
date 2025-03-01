@@ -46,6 +46,9 @@ services:
     image: baranovr605/kittygram_gateway:latest
     container_name: gateway
     env_file: .env
+    volumes:
+      - media:/media
+      - static:/static
     ports:
       - "8089:80"
     networks:
