@@ -47,8 +47,8 @@ services:
     container_name: gateway
     env_file: .env
     volumes:
-      - media:/media
-      - static:/static
+      - media:/var/www/media
+      - static:/usr/share/nginx/html
     ports:
       - "8089:80"
     networks:
