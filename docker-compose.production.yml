@@ -14,7 +14,7 @@ services:
       timeout: 60s
       retries: 5
       start_period: 30s
-  restart: always
+    restart: always
 
   backend:
     image: baranovr605/kittygram_backend:latest
@@ -29,26 +29,27 @@ services:
       postgres:
         condition: service_healthy
     restart: always
-
-    frontend:
-      image: baranovr605/kittygram_frontend:latest
-      container_name: frontend
-      env_file: .env
-      volumes:
-        - static:/app/build
-      networks:
-        - "kittygram_network"
+  
+  frontend:
+    image: baranovr605/kittygram_frontend:latest
+    container_name: frontend
+    env_file: .env
+    volumes:
+      - static:/app/build
+    networks:
+      - "kittygram_network"
     depends_on:
       - backend
     restart: always
-
-    gateway:
-      image: baranovr605/kittygram_gateway:latest
-      container_name: gateway
-      env_file: .env
-      ports: 8089:80
-      networks:
-        - "kittygram_network"
+  
+  gateway:
+    image: baranovr605/kittygram_gateway:latest
+    container_name: gateway
+    env_file: .env
+    ports:
+      - "8089:80"
+    networks:
+      - "kittygram_network"
     depends_on:
       - frontend
     restart: always
@@ -59,6 +60,5 @@ volumes:
   static:
 
 networks:
-  go_app_network:
-    name: "kittygram_network"
+  kittygram_network:
     driver: "bridge"
