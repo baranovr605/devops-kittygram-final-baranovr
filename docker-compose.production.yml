@@ -38,8 +38,6 @@ services:
       - static:/app/build
     networks:
       - "kittygram_network"
-    depends_on:
-      - backend
     restart: always
   
   gateway:
@@ -54,7 +52,7 @@ services:
     networks:
       - "kittygram_network"
     depends_on:
-      - frontend
+      - backend
     restart: always
 
 volumes:
