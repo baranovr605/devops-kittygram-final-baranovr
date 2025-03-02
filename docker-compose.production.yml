@@ -56,7 +56,7 @@ services:
     volumes:
       - media:/var/www/media
       - static:/usr/share/nginx/html/backend
-      - static:/usr/share/nginx/html/frontend
+      - static_frontend:/usr/share/nginx/html/frontend
     ports:
       - "8089:80"
     networks:
