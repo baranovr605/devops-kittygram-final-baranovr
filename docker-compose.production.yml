@@ -41,7 +41,7 @@ services:
     container_name: frontend
     env_file: .env
     volumes:
-      - static:/app/build/
+      - static:/app/build
     networks:
       - "kittygram_network"
     depends_on:
