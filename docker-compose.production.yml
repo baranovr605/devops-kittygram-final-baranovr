@@ -2,6 +2,7 @@ volumes:
   pg_data:
   media:
   static:
+  static_frontend:
 
 
 # version: "3.9"
@@ -41,14 +42,11 @@ services:
     container_name: frontend
     env_file: .env
     volumes:
-      - static:/app/build
+      - static_frontend:/app/build
     networks:
       - "kittygram_network"
     depends_on:
       - backend
-    # command: >
-    #   sh -c "mkdir -p /app/frontend_static  &&
-    #          cp -r /app/build/. /app/frontend_static/"
     restart: always
   
   gateway:
@@ -57,7 +55,8 @@ services:
     env_file: .env
     volumes:
       - media:/var/www/media
-      - static:/usr/share/nginx/html
+      - static:/usr/share/nginx/html/backend
+      - static:/usr/share/nginx/html/frontend
     ports:
       - "8089:80"
     networks:
