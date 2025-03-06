@@ -58,7 +58,7 @@ services:
       - static:/usr/share/nginx/html/backend
       - static_frontend:/usr/share/nginx/html/frontend
     ports:
-      - "8089:80"
+      - "80:80"
     networks:
       - "kittygram_network"
     depends_on:
